@@ -1,4 +1,4 @@
-package com.kzdev.appcursolucas
+package com.kzdev.appcursolucas.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
