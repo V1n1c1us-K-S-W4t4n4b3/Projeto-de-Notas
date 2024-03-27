@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AppCursoLucas</string>
-    <string name="note_list">Lista de notas</string>
+    <string name="note_list">Lista de Anoteções</string>
     <string name="fab">FAB</string>
-    <string name="create_note">Criar nota</string>
+    <string name="new_note">Nova Anotação</string>
+    <string name="imput_note">O que deseja anotar hoje?</string>
+    <string name="m_x_500_caracteres">Máx 500 caracteres</string>
+    <string name="concluded">concluir</string>
 </resources>
