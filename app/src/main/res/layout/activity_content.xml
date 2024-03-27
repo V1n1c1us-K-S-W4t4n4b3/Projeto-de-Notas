@@ -22,7 +22,9 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:title="@string/create_note" />
+                app:navigationIcon="@drawable/ic_back"
+                app:navigationIconTint="?attr/colorSurfaceInverse"
+                app:title="@string/new_note" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -36,6 +38,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -43,17 +46,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                app:endIconMode="clear_text">
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:endIconMode="clear_text"
+                app:helperText="@string/m_x_500_caracteres"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tiet_ev_name"
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/input_name"
-                    android:inputType="textPersonName" />
+                    android:gravity="top"
+                    android:hint="@string/imput_note"
+                    android:inputType="textMultiLine"
+                    android:lines="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <Button
+                android:id="@+id/bt_concluded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/concluded"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
