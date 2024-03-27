@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppCursoLucas</string>
+    <string name="note_list">Lista de notas</string>
+    <string name="fab">FAB</string>
 </resources>
