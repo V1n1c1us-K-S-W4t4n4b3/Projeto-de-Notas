@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Note(
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "note") val note: String?
+
+    //auto generate serve para q a propria room forneça um id
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+    @ColumnInfo(name = "note") val note: String?,
 )
