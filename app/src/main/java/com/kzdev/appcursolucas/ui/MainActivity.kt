@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.kzdev.appcursolucas.adapter.AdapterNote
 import com.kzdev.appcursolucas.data.Note
 import com.kzdev.appcursolucas.database.AppDatabase
 import com.kzdev.appcursolucas.databinding.ActivityMainBinding
@@ -16,15 +18,30 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
+    private lateinit var adapter: AdapterNote
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        setupRecyclerView(emptyList())
 
         binding.fab.setOnClickListener {
             val i = Intent(this, ContentActivity::class.java)
             startActivity(i)
         }
+    }
 
+    private fun setupRecyclerView(list: List<Note>) {
+        adapter = AdapterNote(list)
+        binding.rvList.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@MainActivity.adapter
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
         recoverNote()
     }
 
@@ -49,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             withContext(Dispatchers.Main) {
-                binding.tvNote.text = listNotes.joinToString { it.note ?: "<Sem Valor>" }
+                adapter.updateData(listNotes)
             }
         }
     }
