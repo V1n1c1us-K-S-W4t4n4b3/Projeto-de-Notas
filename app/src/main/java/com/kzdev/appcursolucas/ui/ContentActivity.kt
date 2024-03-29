@@ -37,14 +37,16 @@ class ContentActivity : AppCompatActivity() {
             // escolhemos o thread IO impute output entrada e saida de info para rodar em segundo plano a ação
             withContext(Dispatchers.IO) {
                 val db = Room.databaseBuilder(
-                        applicationContext,
-                        AppDatabase::class.java, "database-note"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
+                    applicationContext,
+                    AppDatabase::class.java, "database-note"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
 
-              db.noteDao().insertAll(note)
+                db.noteDao().insertAll(note)
             }
         }
+
+        finish()
     }
 }
