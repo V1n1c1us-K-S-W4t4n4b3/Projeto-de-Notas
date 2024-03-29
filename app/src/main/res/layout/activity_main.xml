@@ -35,11 +35,11 @@
         android:layout_margin="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-       <TextView
-           android:id="@+id/tv_note"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           tools:text="nota"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_list_note"/>
 
     </androidx.core.widget.NestedScrollView>
 
