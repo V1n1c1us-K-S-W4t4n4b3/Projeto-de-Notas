@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(list: List<Note>) {
-        adapter = AdapterNote(list)
+        adapter = AdapterNote(list) {
+            openNote(it)
+        }
         binding.rvList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@MainActivity.adapter
@@ -43,6 +45,13 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         recoverNote()
+    }
+
+    private fun openNote(data: Note) {
+        val intent = Intent(this, InfoItemActivity::class.java)
+        intent.putExtra("uid", data.uid)
+        intent.putExtra("note", data.note)
+        startActivity(intent)
     }
 
     private fun recoverNote() {
