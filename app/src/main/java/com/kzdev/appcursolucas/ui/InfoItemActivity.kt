@@ -1,6 +1,7 @@
 package com.kzdev.appcursolucas.ui
 
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -28,12 +29,56 @@ class InfoItemActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.btDelete.setOnClickListener { showConfirmationDialog() }
+
+        binding.btUpdate.setOnClickListener { showUpdateDialog() }
     }
 
     private fun receiveData() {
         binding.tvUid.text = intent.getIntExtra("uid", 0).toString()
 
         binding.tvNote.text = intent.getStringExtra("note")
+    }
+
+    private fun showUpdateDialog() {
+        val currentNote = binding.tvNote.text.toString()
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Atualizar Nota")
+        val input = EditText(this)
+        input.setText(currentNote) // Preenche o texto atual na caixa de texto
+        builder.setView(input)
+
+        builder.setPositiveButton("Atualizar") { _, _ ->
+            val updatedNote = input.text.toString()
+            updateNoteInDatabase(updatedNote)
+        }
+
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.cancel()
+        }
+
+        builder.show()
+    }
+
+    private fun updateNoteInDatabase(updatedNote: String) {
+        val uid = intent.getIntExtra("uid", 0)
+        val note = Note(uid, updatedNote)
+
+        lifecycleScope.launch {
+            // Execute em segundo plano usando o thread IO
+            withContext(Dispatchers.IO) {
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "database-note"
+                ).fallbackToDestructiveMigration().build()
+
+                db.noteDao().update(note)
+            }
+
+            withContext(Dispatchers.Main) {
+                binding.tvNote.text = updatedNote
+            }
+        }
     }
 
     private fun deleteNote() {
