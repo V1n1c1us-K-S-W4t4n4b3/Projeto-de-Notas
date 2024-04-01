@@ -68,7 +68,7 @@
                 android:id="@+id/bt_concluded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/concluded"/>
+                android:text="@string/concluded" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

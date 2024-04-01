@@ -15,6 +15,7 @@ import kotlinx.coroutines.withContext
 class InfoItemActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityInfoItemBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -24,33 +25,26 @@ class InfoItemActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.btDelete.setOnClickListener { showConfirmationDialog() }
     }
 
     private fun receiveData() {
-        val uid = intent.getIntExtra("uid", 0)
-        val note = intent.getStringExtra("note")
+        binding.tvUid.text = intent.getIntExtra("uid", 0).toString()
 
-        binding.tvUid.text = uid.toString()
-        binding.tvNote.text = note
+        binding.tvNote.text = intent.getStringExtra("note")
     }
 
     private fun deleteNote() {
 
-
-        val uid = intent.getIntExtra("uid", 0)
-        val note = intent.getStringExtra("note")
-
-        val identification = Note(uid, note)
-
+        val note = Note(intent.getIntExtra("uid", 0), intent.getStringExtra("note"))
 
         lifecycleScope.launch {
 
             // escolhemos o thread IO impute output entrada e saida de info para rodar em segundo plano a ação
             withContext(Dispatchers.IO) {
+
                 val db = Room.databaseBuilder(
                     applicationContext,
                     AppDatabase::class.java, "database-note"
@@ -58,7 +52,7 @@ class InfoItemActivity : AppCompatActivity() {
                     .fallbackToDestructiveMigration()
                     .build()
 
-                db.noteDao().delete(identification)
+                db.noteDao().delete(note)
 
                 finish()
             }
@@ -67,14 +61,18 @@ class InfoItemActivity : AppCompatActivity() {
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
+
         builder.setTitle("Confirmação")
+
         builder.setMessage("Tem certeza que deseja deletar esta anotação?")
+
         builder.setPositiveButton("Sim") { _, _ ->
             deleteNote()
         }
+
         builder.setNegativeButton("Não") { _, _ ->
         }
-        val dialog = builder.create()
-        dialog.show()
+
+        builder.create().show()
     }
 }

@@ -46,7 +46,6 @@ class ContentActivity : AppCompatActivity() {
                 db.noteDao().insertAll(note)
             }
         }
-
         finish()
     }
 }
