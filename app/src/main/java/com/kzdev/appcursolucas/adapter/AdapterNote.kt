@@ -8,7 +8,8 @@ import com.kzdev.appcursolucas.databinding.ItemListNoteBinding
 
 class AdapterNote(
     private var dataSet: List<Note>,
-) : RecyclerView.Adapter<AdapterNote.ViewHolder>() {
+    private val onItemClicked: (Note) -> Unit,
+    ) : RecyclerView.Adapter<AdapterNote.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,6 +27,9 @@ class AdapterNote(
         viewHolder.binding.tvId.text = id.toString()
         viewHolder.binding.tvNote.text = note
 
+        viewHolder.itemView.setOnClickListener {
+            onItemClicked(dataSet[position])
+        }
     }
 
     override fun getItemCount() = dataSet.size
