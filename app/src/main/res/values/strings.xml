@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppCursoLucas</string>
+    <string name="app_name">Minhas notas</string>
     <string name="note_list">Lista de Anoteções</string>
     <string name="new_note">Nova Anotação</string>
     <string name="note">Anotação</string>
